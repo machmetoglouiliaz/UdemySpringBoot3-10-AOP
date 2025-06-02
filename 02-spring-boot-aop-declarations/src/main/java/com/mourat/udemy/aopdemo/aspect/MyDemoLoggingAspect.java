@@ -9,18 +9,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyDemoLoggingAspect {
 
-    // @Before advice for methods start with add() and has any return type and with any parameter
+    // Pointcut for any method in package dao
     @Pointcut("execution(* com.mourat.udemy.aopdemo.dao.*.*(..))")
-    public void daoPackagePointcut(){
-
+    private void daoPackage(){
     }
 
-    @Before("daoPackagePointcut()")
+    @Pointcut("execution(* com.mourat.udemy.aopdemo.dao.*.get*(..))")
+    private void daoGetters(){
+    }
+
+    @Pointcut("execution(* com.mourat.udemy.aopdemo.dao.*.set*(..))")
+    private void daoSetters(){
+    }
+
+    @Pointcut("daoPackage() && !(daoGetters() || daoSetters())")
+    private void daoNoGetSet(){
+    }
+
+
+    @Before("daoNoGetSet()")
     public void beforeAddAccountAdvice(){
         System.out.println("\n=====>>> Executing @Before advice on any method");
     }
 
-    @Before("daoPackagePointcut()")
+    @Before("daoPackage()")
     public void performAPIAnalytics(){
         System.out.println("\n====>>> Performing API analytics");
     }

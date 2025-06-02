@@ -28,6 +28,12 @@ public class AopdemoApplication {
 		adao.addAccount( new Account(), true);
 		adao.doWork();
 
+		adao.setName("test");
+		adao.setEmail("gmail");
+
+		adao.getEmail();
+		adao.getName();
+
 		// Call Membership business method
 		mdao.addSillyMember();
 		mdao.goToSleep();
