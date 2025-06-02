@@ -28,6 +28,6 @@ public class AopdemoApplication {
 		adao.addAccount();
 
 		// Call Membership business method
-		mdao.addAccount();
+		mdao.addSillyMember();
 	}
 }
