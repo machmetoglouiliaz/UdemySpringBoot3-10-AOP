@@ -1,6 +1,7 @@
 package com.mourat.udemy.aopdemo;
 
 import com.mourat.udemy.aopdemo.dao.AccountDAO;
+import com.mourat.udemy.aopdemo.dao.MembershipDAO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,22 +15,19 @@ public class AopdemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountDAO dao){
+	public CommandLineRunner commandLineRunner(AccountDAO adao, MembershipDAO mdao){
 		return runner -> {
-			demoTheBeforeAdvice(dao);
+			demoTheBeforeAdvice(adao, mdao);
 
 		};
 	}
 
-	private void demoTheBeforeAdvice(AccountDAO dao) {
+	private void demoTheBeforeAdvice(AccountDAO adao, MembershipDAO mdao) {
 
 		// Call addAccount from DAO... DAO is injected to command liner automatically (It's a bean)
-		dao.addAccount();
+		adao.addAccount();
 
-		// Let's call it again to be sure!
-		System.out.println("\nLet's call it again!\n");
-
-		// Second call of addAccount() to be sure @Before is working correctly
-		dao.addAccount();
+		// Call Membership business method
+		mdao.addAccount();
 	}
 }
