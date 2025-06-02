@@ -25,9 +25,11 @@ public class AopdemoApplication {
 	private void demoTheBeforeAdvice(AccountDAO adao, MembershipDAO mdao) {
 
 		// Call addAccount from DAO... DAO is injected to command liner automatically (It's a bean)
-		adao.addAccount();
+		adao.addAccount( new Account(), true);
+		adao.doWork();
 
 		// Call Membership business method
 		mdao.addSillyMember();
+		mdao.goToSleep();
 	}
 }

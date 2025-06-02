@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyDemoLoggingAspect {
 
-    // @Before advice for methods start with add() and has any return type
-    @Before("execution(* add*())")
+    // @Before advice for methods start with add() and has any return type and with any parameter
+    @Before("execution(* com.mourat.udemy.aopdemo.dao.*.*(..))")
     public void beforeAddAccount(){
-        System.out.println("\n=====>>> Executing @Before advice on add*()");
+        System.out.println("\n=====>>> Executing @Before advice on any method");
     }
 }
