@@ -2,6 +2,7 @@ package com.mourat.udemy.aopdemo;
 
 import com.mourat.udemy.aopdemo.dao.AccountDAO;
 import com.mourat.udemy.aopdemo.dao.MembershipDAO;
+import com.mourat.udemy.aopdemo.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +18,7 @@ public class AopdemoApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(AccountDAO adao, MembershipDAO mdao){
+	public CommandLineRunner commandLineRunner(AccountDAO adao, MembershipDAO mdao, TrafficFortuneService trafficFortuneService){
 		return runner -> {
 
 			// Test bench for @Before advice and expressions
@@ -25,19 +26,38 @@ public class AopdemoApplication {
 			//demoBeforeAdvice(adao, mdao);
 
 			// Test bench for @AfterReturning advice
-			// @AfterReturning advice with pointcut findAccounts(..) in AccountDAO
+			// @AfterReturning advice with pointcut findAccounts(..) in AccountDAO in dao package
 			//demoAfterReturningAdvice(adao);
 
 			// Test bench for @AfterThrowing advice
-			// @AfterThrowing advice with pointcut findAccounts(..) in AccountDAO
+			// @AfterThrowing advice with pointcut findAccounts(..) in AccountDAO in dao package
 			//demoAfterThrowingAdvice(adao);
 
 			// Test bench for @After advice
-			// @After advice with pointcut findAccounts(..) in AccountDAO
-			demoAfterAdvice(adao);
+			// @After advice with pointcut findAccounts(..) in AccountDAO in dao package
+			//demoAfterAdvice(adao);
+
+			// Test bench for @Around advice
+			// @Around advice with pointcut getFortune(..) in TrafficFortuneService in service package
+			demoAroundAdvice(trafficFortuneService);
 
 		};
 	}
+
+	private void demoAroundAdvice(TrafficFortuneService trafficFortuneService) {
+
+		// Get a fortune from service and display it
+		System.out.println("\n\nMain Program: demoAroundAdvice");
+        try {
+			System.out.println("\n\nMain Program: Calling getFortune with false value");
+            System.out.println(trafficFortuneService.getFortune());
+
+			System.out.println("\n\nMain Program: Calling getFortune with false value");
+			System.out.println(trafficFortuneService.getFortune(true));
+        } catch (Exception e) {
+			System.out.println(e);
+        }
+    }
 
 	private void demoAfterAdvice(AccountDAO adao) {
 

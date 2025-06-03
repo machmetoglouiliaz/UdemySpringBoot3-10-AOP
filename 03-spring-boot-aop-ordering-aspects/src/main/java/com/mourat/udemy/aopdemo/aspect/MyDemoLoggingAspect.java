@@ -2,6 +2,7 @@ package com.mourat.udemy.aopdemo.aspect;
 
 import com.mourat.udemy.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -15,6 +16,47 @@ import java.util.List;
 @Component
 public class MyDemoLoggingAspect {
 
+    // Advice to do some stuff
+    // Before and after execution
+    // For the method getFortune in class TrafficFortuneService
+    @Around("execution(* com.mourat.udemy.aopdemo.service.TrafficFortuneService.getFortune(..))")
+    public Object aroundGetFortuneAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable{
+
+        // Print the method we are advising on
+        System.out.println("\n====>>> Executing @Around on method: " + proceedingJoinPoint.getSignature().toShortString());
+
+        // Get the timestamp before executing the adviced method
+        long startTime = System.currentTimeMillis();
+
+        Object result = null;
+
+        // Execute the method
+        try {
+            result = proceedingJoinPoint.proceed();
+        }catch (Exception e) {
+            System.out.println("@Arround advice: We have a problem " + e);
+
+            result = "This is not an exception: Everything is handled by @Around advice! Don't worry, continue to do stuff! (Uncomment throw line if you want it rethrown)";
+
+            // In case you want to rethrow the exception
+            //throw e;
+        }
+
+        // Get the timestamp after execution
+        long endTime = System.currentTimeMillis();
+
+        // Display how long the method execution took
+        System.out.println("====>>> Method took " + (endTime - startTime)/1000.0 + " seconds to return");
+
+        // A new line for cosmetic only
+        System.out.println();
+
+        return result;
+    }
+
+    // Advice to do some stuff
+    // After the method returns in any case
+    // For the method findAccount in class AccountDAO
     @After("execution(* com.mourat.udemy.aopdemo.dao.AccountDAO.findAccounts(..))")
     public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint){
 
