@@ -2,10 +2,7 @@ package com.mourat.udemy.aopdemo.aspect;
 
 import com.mourat.udemy.aopdemo.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -18,6 +15,16 @@ import java.util.List;
 @Component
 public class MyDemoLoggingAspect {
 
+    @After("execution(* com.mourat.udemy.aopdemo.dao.AccountDAO.findAccounts(..))")
+    public void afterFinallyFindAccountsAdvice(JoinPoint joinPoint){
+
+        // Print the method we are advising on
+        System.out.println("\n====>>> Executing @After on method: " + joinPoint.getSignature().toShortString());
+
+        // A new line for cosmetic only
+        System.out.println();
+    }
+
     // Advice to do some catch stuff
     // After throwing an exception
     // For the method findAccount in class AccountDAO
@@ -25,7 +32,7 @@ public class MyDemoLoggingAspect {
             pointcut = "execution(* com.mourat.udemy.aopdemo.dao.AccountDAO.findAccounts(..))",
             throwing = "exc"
     )
-    public void AfterReturningFindAccountAdvice(JoinPoint joinPoint, Throwable exc){
+    public void AfterThrowingFindAccountsAdvice(JoinPoint joinPoint, Throwable exc){
 
         // Print the method we are advising on
         System.out.println("\n====>>> Executing @AfterThrowing on method: " + joinPoint.getSignature().toShortString());
@@ -44,7 +51,7 @@ public class MyDemoLoggingAspect {
             pointcut = "execution(* com.mourat.udemy.aopdemo.dao.AccountDAO.findAccounts(..))",
             returning = "result"
     )
-    public void AfterReturningFindAccountAdvice(JoinPoint joinPoint, List<Account> result){
+    public void AfterReturningFindAccountsAdvice(JoinPoint joinPoint, List<Account> result){
 
         // Print the method we are advising on
         System.out.println("\n====>>> Executing @AfterReturning on method: " + joinPoint.getSignature().toShortString());
@@ -74,7 +81,7 @@ public class MyDemoLoggingAspect {
     // Before execution
     // For any method except getters and setters
     @Before("com.mourat.udemy.aopdemo.aspect.AopExpressions.daoNoGetSet()")
-    public void beforeAddAccountAdvice(JoinPoint joinPoint){
+    public void beforeAddAccountsAdvice(JoinPoint joinPoint){
         System.out.println("\n=====>>> Executing @Before advice for logging");
 
         // Display the method signature
