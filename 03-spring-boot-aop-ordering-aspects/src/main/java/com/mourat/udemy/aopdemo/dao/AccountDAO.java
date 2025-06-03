@@ -2,6 +2,8 @@ package com.mourat.udemy.aopdemo.dao;
 
 import com.mourat.udemy.aopdemo.Account;
 
+import java.util.List;
+
 public interface AccountDAO {
 
     void addAccount(Account account, boolean vipFlag);
@@ -15,4 +17,6 @@ public interface AccountDAO {
     String getEmail();
 
     void setEmail(String email);
+
+    List<Account> findAccounts();
 }

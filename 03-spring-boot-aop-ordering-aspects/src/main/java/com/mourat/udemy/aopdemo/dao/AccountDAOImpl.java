@@ -3,6 +3,9 @@ package com.mourat.udemy.aopdemo.dao;
 import com.mourat.udemy.aopdemo.Account;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Repository
 public class AccountDAOImpl implements AccountDAO{
 
@@ -41,5 +44,20 @@ public class AccountDAOImpl implements AccountDAO{
     public void setEmail(String email) {
         System.out.println(this.getClass() + ": setEmail()");
         this.email = email;
+    }
+
+    // Creates a dummy list of accounts and returns it (for testing purposes of @After advices)
+    @Override
+    public List<Account> findAccounts() {
+
+        // Create a new empty list
+        List<Account> myAccounts = new ArrayList<>();
+
+        // Add some dummy accounts in
+        myAccounts.add(new Account("Mourat", "Over 9000"));
+        myAccounts.add(new Account("Kostas", "Worth everything!"));
+
+        // Return the list
+        return myAccounts;
     }
 }
