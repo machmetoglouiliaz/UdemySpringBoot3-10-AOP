@@ -19,12 +19,29 @@ public class AopdemoApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AccountDAO adao, MembershipDAO mdao){
 		return runner -> {
-			demoAfterAdvice(adao);
+			demoAfterThrowingAdvice(adao);
 
 		};
 	}
 
-	private void demoAfterAdvice(AccountDAO adao) {
+	private void demoAfterThrowingAdvice(AccountDAO adao) {
+		// Get the accounts from dao
+		List<Account> accounts = null;
+		boolean tripWire = true;
+
+		try {
+			accounts = adao.findAccounts(tripWire);
+		} catch(Exception e){
+			System.out.println("Main Program: Caught an exception: " + e);
+		}
+
+		// Display them for testing reasons
+		System.out.println("\n\nMain Program: demoAfterAdvice");
+		System.out.println("-".repeat(40));
+		System.out.println(accounts);
+	}
+
+	private void demoAfterReturningAdvice(AccountDAO adao) {
 
 		// Get the accounts from dao
 		List<Account> accounts = adao.findAccounts();

@@ -19,4 +19,7 @@ public interface AccountDAO {
     void setEmail(String email);
 
     List<Account> findAccounts();
+
+    List<Account> findAccounts(boolean tripWire);
+
 }
