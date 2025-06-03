@@ -26,7 +26,7 @@ public class AopdemoApplication {
 
 		// DAOs are injected to command liner automatically (They are beans)
 		// Call some functions, getters and setters of daos to test aspects
-		adao.addAccount( new Account(), true);
+		adao.addAccount( new Account("Mourat", "Over 9000!"), true);
 		adao.doWork();
 
 		adao.setName("test");
